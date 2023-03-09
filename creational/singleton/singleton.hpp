@@ -11,8 +11,9 @@ public:
 	static const std::string& read(){return content;}
 	static void write(const std::string& str){content.append(str);}
 	static void clear(const std::string& str){content.clear();}
-private:
+protected:
 	DataBase() = default;
+private:
 	static std::string content;
 };
 std::string DataBase::content = "";
