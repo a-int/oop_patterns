@@ -30,14 +30,18 @@ protected:
 };
 
 template <typename T> 
-class AbstactList {
+class List {
 public:
-  AbstactList() {
+  List(): size(0) {
     end_ = new BaseNode<T>;
     end_->prev = end_;
     end_->next = end_;
   }
-  virtual ~AbstactList() {delete end_;};
+  void clear();
+  virtual ~List() {
+    clear();
+    delete end_;
+  }
   ListIterator<T> begin() { return end_->next; }
   ListIterator<T> end() { return end_; }
   void push_back(const T &val);
@@ -45,18 +49,36 @@ public:
 
 protected:
   BaseNode<T> *end_;
+  int size = 0;
 };
 
-template <typename T> void AbstactList<T>::push_back(const T &val) {
+template <typename T> void List<T>::push_back(const T &val) {
   auto newElem = new Node(val, end_->prev, end_);
   // update links to new element
   end_->prev->next = newElem;
   end_->prev = newElem;
+  ++size;
 }
 
-template <typename T> void AbstactList<T>::push_front(const T &val) {
+template <typename T> void List<T>::push_front(const T &val) {
   auto newElem = new Node(val, end_, end_->next);
   // update links to new element
   end_->next->prev = newElem;
   end_->next = newElem;
+  ++size;
 }
+
+template<typename T>
+void List<T>::clear(){
+  while(end_->next != end_){
+    Node<T>* nxt = dynamic_cast<Node<T>*>(end_->next);
+    end_->next = nxt->next;
+    delete nxt;
+  }
+  size = 0;
+}
+
+
+
+
+
