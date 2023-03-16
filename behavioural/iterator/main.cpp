@@ -9,6 +9,6 @@ int main(){
 	list.push_back(4);
 	for(auto& it : list)
 		std::cout<<it<<" ";
-	//UB
-	std::cout<<*list.end();
+	
+	std::cout<<*list.end(); //UB
 }

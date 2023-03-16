@@ -20,8 +20,15 @@ public:
 
   bool operator==(const ListIterator<T> &rhs) { return node == rhs.node; }
   bool operator!=(const ListIterator<T> &rhs) { return !(node == rhs.node); }
-  void operator++(int) { node = node->next; }
-  void operator++() { node = node->next; }
+  Node<T>* operator++(int) { 
+    Node<T>* tmp = reinterpret_cast<Node<T>*>(node);
+    node = node->next;
+    return tmp;
+  }
+  Node<T>* operator++() { 
+    node = node->next; 
+    return reinterpret_cast<Node<T>*>(node);
+  }
   T &operator*() { return reinterpret_cast<Node<T> *>(node)->val; }
   T &operator->() { return this->operator*(); }
 
